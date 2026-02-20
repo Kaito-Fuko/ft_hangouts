@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
+from database import create_table
+from home import HomeFrame
+from language import LANG, current_lang
+from theme import change_color
+import time
 
 # Dico couleur
 couleur = {"noir": "#252726",
@@ -9,6 +14,9 @@ couleur = {"noir": "#252726",
 
 # Para fenetre
 app = tk.Tk()
+home = HomeFrame(app)
+create_table()
+home.pack(fill="both", expand=True)
 app.title("Hangouts")
 app.config(bg="gray30")
 app.geometry("400x600")
@@ -30,9 +38,9 @@ def switch():
 		for x in range(300):
 			navLateral.place(x=-x, y=0)
 			topFrame.update()
-		bannerTexte.config(fg="violet")
-		accueilText.config(bg="violet")
-		topFrame.config(bg="violet")
+		bannerTexte.config(fg=couleur["violet"])
+		accueilText.config(bg=couleur["violet"])
+		topFrame.config(bg=couleur["violet"])
 		app.config(bg="gray30")
 		btnEtat = False
 	else :
@@ -79,7 +87,7 @@ navLateral = tk.Frame(app, bg="gray30", width=300, height=600)
 navLateral.place(x=-300, y=0)
 tk.Label(navLateral,
 		 font="comicsansms 16",
-		 bg="violet",
+		 bg=couleur["violet"],
 		 fg=couleur["noir"],
 		 width=300,
 		 height=2,
@@ -87,8 +95,10 @@ tk.Label(navLateral,
 		 ).place(x=0, y=0)
 y = 80
 
+lan = LANG[current_lang]
+
 # option lateral
-option = ["ACCUEIL", "COMPTE", "AMIS", "CHAT", "AIDE", "EXIT"]
+option = [lan["home"], lan["account"], lan["friends"], lan["chat"], lan["help"], lan["exit"]]
 
 # position option
 
@@ -97,8 +107,53 @@ for i in range(6):
 	y += 40
 
 # BOUTON fermeture
-fermeBtn = tk.Button(navLateral, image=closeIcon, bg=couleur["violet"], activebackground=couleur["noir"], command=switch)
+fermeBtn = tk.Button(navLateral,
+					 image=closeIcon,
+					 bg=couleur["violet"],
+					 activebackground=couleur["noir"],
+					 command=switch)
 fermeBtn.place(x=250, y=10)
+
+# envoie msg
+def send_message(contact_id, sender, content):
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO messages(contact_id, sender, content)
+        VALUES (?, ?, ?)
+    """, (contact_id, sender, content))
+
+    conn.commit()
+    conn.close()
+
+# read msg
+def get_messages(contact_id):
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT sender, content FROM messages
+        WHERE contact_id=?
+    """, (contact_id,))
+
+    data = cursor.fetchall()
+    conn.close()
+    return data
+
+# livecycle android
+last_time = None
+
+def leave(event):
+    global last_time
+    last_time = time.strftime("%H:%M:%S")
+
+def return_app(event):
+    if last_time:
+        print("App quitté à :", last_time)
+
+app.bind("<FocusOut>", leave)
+app.bind("<FocusIn>", return_app)
 
 app.mainloop()
 
