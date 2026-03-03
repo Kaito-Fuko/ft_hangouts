@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
 from language import LANG, current_lang
+from compte import profil
 
 lan = LANG[current_lang]
 
@@ -32,7 +33,6 @@ amisEtat = False
 chatEtat = False
 helpEtat = False
 
-
 # charge image nav
 navIcon = PhotoImage(file='assets/menu.png')
 closeIcon = PhotoImage(file='assets/croix.png')
@@ -51,7 +51,9 @@ def switch():
 			accueilText.config(bg=couleur["bleuC"])
 			topFrame.config(bg=couleur["bleuC"])
 			app.config(bg=couleur["roseC"])
+			profil(app, False)
 		else:
+			profil(app, True)
 			bannerTexte.config(fg=couleur["violet"], bg=couleur["blan"])
 			accueilText.config(bg=couleur["bleuC"])
 			topFrame.config(bg=couleur["bleuC"])
@@ -61,6 +63,8 @@ def switch():
 		for x in range(-300, 0):
 			navLateral.place(x=x, y=0)
 			topFrame.update()
+		if compteEtat is True:
+			profil(app, True)
 		btnEtat=True
 
 def accueil():
@@ -75,6 +79,8 @@ def accueil():
 		topFrame.config(bg=couleur["bleuC"])
 		app.config(bg=couleur["roseC"])
 		btnEtat = False
+	if compteEtat is True:
+		profil(app, True)
 		compteEtat = False
 	else :
 		for x in range(-300, 0):
@@ -131,37 +137,48 @@ def Compte():
 	global btnEtat
 	global compteEtat
 	if btnEtat is True:
+		btnEtat=False
 		for x in range(300):
 			navLateral.place(x=-x, y=0)
 			topFrame.update()
-		topFrame.config(bg=couleur["bleuC"])
-		accueilText.config(bg=couleur["bleuC"])
-		app.config(bg=couleur["noir"])
-		bannerTexte.config(bg=couleur["roseC"], fg=couleur["roseC"])
-		profil = tk.Label(app,
-						  bg=couleur["violet"],
-						  height=2,
-						  width=5,
-						  padx=10,
-						  pady=10,
-						  ).place(x=10, y=60)
-		infoUsername = tk.Label(app,
-								text="Username",
-								font="comicsansms 12",
-								fg=couleur["violet"],
-								bg=couleur["blan"]).place(x=85, y=75)
-		infoAmies = tk.Label(app,
-							 text=lan["friends"],
-							 font="comicsansms 12",
-							 fg=couleur["violet"],
-							 bg=couleur["blan"]).place(x=85, y=95)
-		infoSettings = tk.Label(app,
-								text=lan["settings"],
-								font="comicsansms 12",
-								fg=couleur["violet"],
-								bg=couleur["blan"]).place(x=10, y=125)
-		btnEtat = False
-		compteEtat = True
+	compteEtat=True
+	profil(app, False)
+
+# def Compte():
+# 	global btnEtat
+# 	global compteEtat
+# 	if btnEtat is True:
+# 		for x in range(300):
+# 			navLateral.place(x=-x, y=0)
+# 			topFrame.update()
+# 		topFrame.config(bg=couleur["bleuC"])
+# 		accueilText.config(bg=couleur["bleuC"])
+# 		app.config(bg=couleur["noir"])
+# 		bannerTexte.config(bg=couleur["roseC"], fg=couleur["roseC"])
+# 		profil = tk.Label(app,
+# 						  bg=couleur["violet"],
+# 						  height=2,
+# 						  width=5,
+# 						  padx=10,
+# 						  pady=10,
+# 						  ).place(x=10, y=60)
+# 		infoUsername = tk.Label(app,
+# 								text="Username",
+# 								font="comicsansms 12",
+# 								fg=couleur["violet"],
+# 								bg=couleur["blan"]).place(x=85, y=75)
+# 		infoAmies = tk.Label(app,
+# 							 text=lan["friends"],
+# 							 font="comicsansms 12",
+# 							 fg=couleur["violet"],
+# 							 bg=couleur["blan"]).place(x=85, y=95)
+# 		infoSettings = tk.Label(app,
+# 								text=lan["settings"],
+# 								font="comicsansms 12",
+# 								fg=couleur["violet"],
+# 								bg=couleur["blan"]).place(x=10, y=125)
+# 		btnEtat = False
+# 		compteEtat = True
 
 def Quitte():
 	global btnEtat
