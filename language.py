@@ -3,9 +3,10 @@ LANG = {
         "home": "Accueil",
         "chat": "Discussion",
 		"account": "Compte",
-		"friends": "Amis",
+		"friends": "Ami.es",
 		"help": "Aide",
-		"exit": "Quitter"
+		"exit": "Quitter",
+		"settings": "Reglages"
     },
     "en": {
         "home": "Home",
@@ -13,7 +14,8 @@ LANG = {
 		"account": "Account",
 		"friends": "Friends",
 		"help": "Help",
-		"exit": "Exit"
+		"exit": "Exit",
+		"settings": "Settings"
     }
 }
 

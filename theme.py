@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import PhotoImage
 from language import LANG, current_lang
 
+lan = LANG[current_lang]
+
 couleur = {"noir": "#252726",
 		   "violet": "#6F6D9E",
 		   "blan": "#FFFFFF",
@@ -23,8 +25,13 @@ app.iconphoto(True, icon)
 topFrame = tk.Frame(app, bg=couleur["bleuC"])
 topFrame.pack(side="top", fill=tk.X)
 
-# para Switch
+# para fonction
 btnEtat = False
+compteEtat = False
+amisEtat = False
+chatEtat = False
+helpEtat = False
+
 
 # charge image nav
 navIcon = PhotoImage(file='assets/menu.png')
@@ -34,6 +41,31 @@ imgFond = PhotoImage(file='assets/fond.png')
 # definir switch
 def switch():
 	global btnEtat
+	global compteEtat
+	if btnEtat is True:
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+		if compteEtat is True:
+			bannerTexte.config(fg=couleur["roseC"], bg=couleur["roseC"])
+			accueilText.config(bg=couleur["bleuC"])
+			topFrame.config(bg=couleur["bleuC"])
+			app.config(bg=couleur["roseC"])
+		else:
+			bannerTexte.config(fg=couleur["violet"], bg=couleur["blan"])
+			accueilText.config(bg=couleur["bleuC"])
+			topFrame.config(bg=couleur["bleuC"])
+			app.config(bg=couleur["roseC"])
+		btnEtat = False
+	else :
+		for x in range(-300, 0):
+			navLateral.place(x=x, y=0)
+			topFrame.update()
+		btnEtat=True
+
+def accueil():
+	global btnEtat
+	global compteEtat
 	if btnEtat is True:
 		for x in range(300):
 			navLateral.place(x=-x, y=0)
@@ -43,6 +75,7 @@ def switch():
 		topFrame.config(bg=couleur["bleuC"])
 		app.config(bg=couleur["roseC"])
 		btnEtat = False
+		compteEtat = False
 	else :
 		for x in range(-300, 0):
 			navLateral.place(x=x, y=0)
@@ -72,26 +105,6 @@ can.pack()
 
 # Que votre lumiere parvient a eclaire les autres.
 
-def Compte():
-	global btnEtat
-	if btnEtat is True:
-		btnEtat = False
-	for x in range(300):
-		navLateral.place(x=-x, y=0)
-		topFrame.update()
-	topFrame.config(bg=couleur["bleuC"])
-	accueilText.config(bg=couleur["bleuC"])
-	app.config(bg=couleur["noir"])
-	bannerTexte.config(bg=couleur["roseC"], fg=couleur["roseC"])
-	profil = tk.Label(app,
-					   bg=couleur["violet"],
-					   #activebackground=None,
-					   height=2,
-					   width=5,
-					   padx=10,
-					   pady=10,
-					   ).place(x=10, y=60)
-
 # navbar icone
 navbarBtn = tk.Button(topFrame,
 					  image=navIcon,
@@ -114,11 +127,50 @@ tk.Label(navLateral,
 		 ).place(x=0, y=0)
 y = 80
 
-lan = LANG[current_lang]
+def Compte():
+	global btnEtat
+	global compteEtat
+	if btnEtat is True:
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+		topFrame.config(bg=couleur["bleuC"])
+		accueilText.config(bg=couleur["bleuC"])
+		app.config(bg=couleur["noir"])
+		bannerTexte.config(bg=couleur["roseC"], fg=couleur["roseC"])
+		profil = tk.Label(app,
+						  bg=couleur["violet"],
+						  height=2,
+						  width=5,
+						  padx=10,
+						  pady=10,
+						  ).place(x=10, y=60)
+		infoUsername = tk.Label(app,
+								text="Username",
+								font="comicsansms 12",
+								fg=couleur["violet"],
+								bg=couleur["blan"]).place(x=85, y=75)
+		infoAmies = tk.Label(app,
+							 text=lan["friends"],
+							 font="comicsansms 12",
+							 fg=couleur["violet"],
+							 bg=couleur["blan"]).place(x=85, y=95)
+		infoSettings = tk.Label(app,
+								text=lan["settings"],
+								font="comicsansms 12",
+								fg=couleur["violet"],
+								bg=couleur["blan"]).place(x=10, y=125)
+		btnEtat = False
+		compteEtat = True
+
+def Quitte():
+	global btnEtat
+	btnEtat=False
+	exit()
 
 # option lateral
 option = [lan["home"], lan["account"], lan["friends"], lan["chat"], lan["help"], lan["exit"]]
-com = [switch, Compte, None, None, None, None]
+com = [accueil, Compte, None, None, None, Quitte]
 #com = [switch, Compte, Amies, Chat, Aide, Quitte]
 
 # position option
