@@ -59,10 +59,10 @@ accueilText.pack(side="right")
 can = Canvas(app, width=400, height=600)
 can.create_image(0, 0, anchor=NW, image=imgFond)
 bannerTexte = tk.Label(app,
-					   text="chat",
+					   text="pour se retrouver au coin du feu",
 					   font="comicsansms 16",
 					   fg=couleur["violet"])
-bannerTexte.place(x = 180,y = 400)
+bannerTexte.place(x = 100,y = 400)
 can.pack()
 
 # navbar icone
@@ -72,7 +72,7 @@ navbarBtn = tk.Button(topFrame,
 					  padx=20,
 					  activebackground=couleur["noir"],
 					  command=switch)
-navbarBtn.place(x=10, y=10)
+navbarBtn.place(x=5, y=5)
 
 #bar lateral
 navLateral = tk.Frame(app, bg="gray30", width=300, height=600)
@@ -104,7 +104,7 @@ fermeBtn = tk.Button(navLateral,
 					 bg=couleur["violet"],
 					 activebackground=couleur["noir"],
 					 command=switch)
-fermeBtn.place(x=250, y=10)
+fermeBtn.place(x=255, y=5)
 
 def change_color(color):
     topFrame.config(bg=color)
