@@ -2,17 +2,12 @@ import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
 from language import LANG, current_lang
-from compte import profil
+from chat import chat2
+from main import get_app, couleur
 
 lan = LANG[current_lang]
 
-couleur = {"noir": "#252726",
-		   "violet": "#6F6D9E",
-		   "blan": "#FFFFFF",
-		   "roseC": "#F5BFDA",
-		   "roseF": "#F5ACC6",
-		   "bleuC": "#C2D8F7",
-		   "bleuF": "#99AFE7"}
+
 
 app = tk.Tk()
 # app = get_app()
@@ -51,10 +46,10 @@ def switch():
 			accueilText.config(bg=couleur["bleuC"])
 			topFrame.config(bg=couleur["bleuC"])
 			app.config(bg=couleur["roseC"])
-			profil(app, False)
+			profil(False)
 		else:
-			profil(app, True)
-			bannerTexte.config(fg=couleur["violet"], bg=couleur["blan"])
+			# profil(app, True)
+			bannerTexte.config(fg=couleur["violet"], bg=couleur["roseF"])
 			accueilText.config(bg=couleur["bleuC"])
 			topFrame.config(bg=couleur["bleuC"])
 			app.config(bg=couleur["roseC"])
@@ -64,7 +59,7 @@ def switch():
 			navLateral.place(x=x, y=0)
 			topFrame.update()
 		if compteEtat is True:
-			profil(app, True)
+			profil(True)
 		btnEtat=True
 
 def accueil():
@@ -80,13 +75,13 @@ def accueil():
 		app.config(bg=couleur["roseC"])
 		btnEtat = False
 	if compteEtat is True:
-		profil(app, True)
+		profil(True)
 		compteEtat = False
-	else :
-		for x in range(-300, 0):
-			navLateral.place(x=x, y=0)
-			topFrame.update()
-		btnEtat=True
+	# else :
+	# 	for x in range(-300, 0):
+	# 		navLateral.place(x=x, y=0)
+	# 		topFrame.update()
+	# 	btnEtat=True
 
 # text navbar
 accueilText = tk.Label(topFrame,
@@ -105,7 +100,7 @@ bannerTexte = tk.Label(app,
 					   text="Que votre lumiere parvient\na eclaire les autres.",
 					   font="comicsansms 16",
 					   fg=couleur["violet"],
-					   bg=couleur["blan"])
+					   bg=couleur["roseF"])
 bannerTexte.place(x = 100,y = 500)
 can.pack()
 
@@ -142,43 +137,91 @@ def Compte():
 			navLateral.place(x=-x, y=0)
 			topFrame.update()
 	compteEtat=True
-	profil(app, False)
+	profil(False)
 
-# def Compte():
-# 	global btnEtat
-# 	global compteEtat
-# 	if btnEtat is True:
-# 		for x in range(300):
-# 			navLateral.place(x=-x, y=0)
-# 			topFrame.update()
-# 		topFrame.config(bg=couleur["bleuC"])
-# 		accueilText.config(bg=couleur["bleuC"])
-# 		app.config(bg=couleur["noir"])
-# 		bannerTexte.config(bg=couleur["roseC"], fg=couleur["roseC"])
-# 		profil = tk.Label(app,
-# 						  bg=couleur["violet"],
-# 						  height=2,
-# 						  width=5,
-# 						  padx=10,
-# 						  pady=10,
-# 						  ).place(x=10, y=60)
-# 		infoUsername = tk.Label(app,
-# 								text="Username",
-# 								font="comicsansms 12",
-# 								fg=couleur["violet"],
-# 								bg=couleur["blan"]).place(x=85, y=75)
-# 		infoAmies = tk.Label(app,
-# 							 text=lan["friends"],
-# 							 font="comicsansms 12",
-# 							 fg=couleur["violet"],
-# 							 bg=couleur["blan"]).place(x=85, y=95)
-# 		infoSettings = tk.Label(app,
-# 								text=lan["settings"],
-# 								font="comicsansms 12",
-# 								fg=couleur["violet"],
-# 								bg=couleur["blan"]).place(x=10, y=125)
-# 		btnEtat = False
-# 		compteEtat = True
+def profil(Etat):
+	if Etat is True:
+		for x in range(85):
+			profil.place(x=-x, y=60)
+			topFrame.update()
+		# infoUsername.place(x=-85, y=75)
+		# infoAmies.place(x=-85, y=95)
+		# infoSettings.place(x=-85, y=125)
+	else:
+		for x in range(-85, 10):
+			profil.place(x=x, y=60)
+			topFrame.update()
+		# infoUsername.place(x=85, y=75)
+		# infoAmies.place(x=85, y=95)
+		# infoSettings.place(x=10, y=125)
+
+def chat():
+	global btnEtat
+	global chatEtat
+	if btnEtat is True:
+		btnEtat=False
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+	chatEtat=True
+	chat2(False)
+
+profil = tk.Frame(app,
+				  bg=couleur["violet"],
+				  height=2,
+				  width=5)
+profil.place(x=-85, y=60)
+infoUsername = tk.Label(app,
+						text="Username",
+						font="comicsansms 12",
+						fg=couleur["violet"],
+						bg=couleur["blan"]).place(x=-85,y=75)
+infoAmies = tk.Label(app,
+					 text=lan["friends"],
+					 font="comicsansms 12",
+					 fg=couleur["violet"],
+					 bg=couleur["blan"]).place(x=-85, y=95)
+infoSettings = tk.Label(app,
+						text=lan["settings"],
+						font="comicsansms 12",
+						fg=couleur["violet"],
+						bg=couleur["blan"]).place(x=-85, y=125)
+
+# def profil(Etat):
+	# global btnEtat
+	# global compteEtat
+	# if btnEtat is True:
+		# for x in range(300):
+		# 	navLateral.place(x=-x, y=0)
+		# 	topFrame.update()
+		# topFrame.config(bg=couleur["bleuC"])
+		# accueilText.config(bg=couleur["bleuC"])
+		# app.config(bg=couleur["noir"])
+		# bannerTexte.config(bg=couleur["roseC"], fg=couleur["roseC"])
+		# profil = tk.Label(app,
+		# 				  bg=couleur["violet"],
+		# 				  height=2,
+		# 				  width=5,
+		# 				  padx=10,
+		# 				  pady=10,
+		# 				  ).place(x=10, y=60)
+		# infoUsername = tk.Label(app,
+		# 						text="Username",
+		# 						font="comicsansms 12",
+		# 						fg=couleur["violet"],
+		# 						bg=couleur["blan"]).place(x=85, y=75)
+		# infoAmies = tk.Label(app,
+		# 					 text=lan["friends"],
+		# 					 font="comicsansms 12",
+		# 					 fg=couleur["violet"],
+		# 					 bg=couleur["blan"]).place(x=85, y=95)
+		# infoSettings = tk.Label(app,
+		# 						text=lan["settings"],
+		# 						font="comicsansms 12",
+		# 						fg=couleur["violet"],
+		# 						bg=couleur["blan"]).place(x=10, y=125)
+		# btnEtat = False
+		# compteEtat = True
 
 def Quitte():
 	global btnEtat
@@ -187,7 +230,7 @@ def Quitte():
 
 # option lateral
 option = [lan["home"], lan["account"], lan["friends"], lan["chat"], lan["help"], lan["exit"]]
-com = [accueil, Compte, None, None, None, Quitte]
+com = [accueil, Compte, None, chat, None, Quitte]
 #com = [switch, Compte, Amies, Chat, Aide, Quitte]
 
 # position option

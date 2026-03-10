@@ -3,15 +3,23 @@ from tkinter import *
 from tkinter import PhotoImage
 from database import create_table
 from home import HomeFrame
-from theme import change_color, get_app
 import time
 
-# Dico couleur
 couleur = {"noir": "#252726",
-		   "violet": "#800080",
-		   "blan": "#FFFFFF"}
+		   "violet": "#6F6D9E",
+		   "blan": "#FFFFFF",
+		   "roseC": "#F5BFDA",
+		   "roseF": "#E493CA",
+		   "bleuC": "#C2D8F7",
+		   "bleuF": "#99AFE7"}
 
 app = get_app()
+# app = tk.Tk()
+# app.title("Hangouts")
+# app.config(bg=couleur["roseF"])
+# app.geometry("400x600")
+# icon = tk.PhotoImage(file="assets/logo.png")
+# app.iconphoto(True, icon)
 home = HomeFrame(app)
 create_table()
 home.pack(fill="both", expand=True)
@@ -56,6 +64,7 @@ def return_app(event):
 
 app.bind("<FocusOut>", leave)
 app.bind("<FocusIn>", return_app)
+
 
 app.mainloop()
 
