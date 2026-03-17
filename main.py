@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
 from database import create_table
+from language import LANG, current_lang, COLOR
 from home import HomeFrame
+from theme import get_app
 import time
 
 couleur = {"noir": "#252726",

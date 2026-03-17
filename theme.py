@@ -1,18 +1,24 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
-from language import LANG, current_lang
-from chat import chat2
-from main import get_app, couleur
+from language import LANG, current_lang, COLOR
+# from chat import chat2
 
 lan = LANG[current_lang]
 
+couleur = COLOR
 
+# __________________________________________________________________#
+# 						affichage du fond							#
+# 	base de l'app plus 
+# 
+# 
+# 
 
 app = tk.Tk()
 # app = get_app()
 app.title("Hangouts")
-app.config(bg="white")
+app.config(bg=couleur["roseF"])
 app.geometry("400x600")
 icon = tk.PhotoImage(file="assets/logo.png")
 app.iconphoto(True, icon)
@@ -45,7 +51,7 @@ def switch():
 			bannerTexte.config(fg=couleur["roseC"], bg=couleur["roseC"])
 			accueilText.config(bg=couleur["bleuC"])
 			topFrame.config(bg=couleur["bleuC"])
-			app.config(bg=couleur["roseC"])
+			app.config(bg=couleur["roseF"])
 			profil(False)
 		else:
 			# profil(app, True)
@@ -97,7 +103,7 @@ accueilText.pack(side="right")
 can = Canvas(app, width=400, height=600)
 can.create_image(0, 0, anchor=NW, image=imgFond)
 bannerTexte = tk.Label(app,
-					   text="Que votre lumiere parvient\na eclaire les autres.",
+					   text=lan["slogant"],
 					   font="comicsansms 16",
 					   fg=couleur["violet"],
 					   bg=couleur["roseF"])
@@ -106,28 +112,54 @@ can.pack()
 
 # Que votre lumiere parvient a eclaire les autres.
 
-# navbar icone
-navbarBtn = tk.Button(topFrame,
-					  image=navIcon,
-					  bg=couleur["bleuC"],
-					  padx=20,
-					  activebackground=couleur["bleuF"],
-					  command=switch)
-navbarBtn.place(x=5, y=5)
+# permet d'afficher le chat
+def chat():
+	global btnEtat
+	global chatEtat
+	if btnEtat is True:
+		btnEtat=False
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+	chatEtat=True
+	chat2(False)
 
-#bar lateral
-navLateral = tk.Frame(app, bg=couleur["roseC"], width=300, height=600)
-navLateral.place(x=-300, y=0)
-tk.Label(navLateral,
-		 font="comicsansms 16",
-		 bg=couleur["bleuC"],
-		 fg=couleur["bleuF"],
-		 width=300,
-		 height=2,
-		 padx=20
-		 ).place(x=0, y=0)
-y = 80
+# permet la fonction du chat
+def add_to_list():
+	text = entry.get()
+	if text:
+		text_list.insert(tk.END, text)
+		entry.delete(0, tk.END)
 
+frame = tk.Frame(app, bg=couleur["bleuF"], width=400, height=600)
+frame.place(x=-400, y=48)
+
+entry = tk.Entry(frame,
+				 bg=couleur["roseC"],
+				 width=38)
+entry.place(x=10, y=510)
+
+entry_btn = tk.Button(frame,
+					  text=lan["enter"],
+					  height=1,
+					  command=add_to_list)
+entry_btn.place(x=330, y=510)
+
+text_list = tk.Listbox(frame,
+					   bg=couleur["roseC"],
+					   width=39,
+					   height=27)
+text_list.place(x=10, y=5)
+
+# affichage fluide du chat
+def chat2(Etat):
+	for x in range(-400, 1):
+		frame.place(x=-x, y=48)
+		topFrame.update()
+	if Etat is False:
+		frame.config(bg = couleur["bleuF"])
+
+# permet d'affiche le compte
 def Compte():
 	global btnEtat
 	global compteEtat
@@ -155,22 +187,14 @@ def profil(Etat):
 		# infoAmies.place(x=85, y=95)
 		# infoSettings.place(x=10, y=125)
 
-def chat():
-	global btnEtat
-	global chatEtat
-	if btnEtat is True:
-		btnEtat=False
-		for x in range(300):
-			navLateral.place(x=-x, y=0)
-			topFrame.update()
-	chatEtat=True
-	chat2(False)
 
+# affichage compte
 profil = tk.Frame(app,
 				  bg=couleur["violet"],
 				  height=2,
 				  width=5)
 profil.place(x=-85, y=60)
+
 infoUsername = tk.Label(app,
 						text="Username",
 						font="comicsansms 12",
@@ -201,8 +225,8 @@ infoSettings = tk.Label(app,
 		# profil = tk.Label(app,
 		# 				  bg=couleur["violet"],
 		# 				  height=2,
-		# 				  width=5,
 		# 				  padx=10,
+		# 				  width=5,
 		# 				  pady=10,
 		# 				  ).place(x=10, y=60)
 		# infoUsername = tk.Label(app,
@@ -222,6 +246,28 @@ infoSettings = tk.Label(app,
 		# 						bg=couleur["blan"]).place(x=10, y=125)
 		# btnEtat = False
 		# compteEtat = True
+
+# navbar icone
+navbarBtn = tk.Button(topFrame,
+					  image=navIcon,
+					  bg=couleur["bleuC"],
+					  padx=20,
+					  activebackground=couleur["bleuF"],
+					  command=switch)
+navbarBtn.place(x=5, y=5)
+
+#bar lateral
+navLateral = tk.Frame(app, bg=couleur["roseC"], width=300, height=600)
+navLateral.place(x=-300, y=0)
+tk.Label(navLateral,
+		 font="comicsansms 16",
+		 bg=couleur["bleuC"],
+		 fg=couleur["bleuF"],
+		 width=300,
+		 height=2,
+		 padx=20
+		 ).place(x=0, y=0)
+y = 80
 
 def Quitte():
 	global btnEtat

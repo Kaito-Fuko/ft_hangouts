@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
 # from theme import btnEtat
-from language import LANG, current_lang
+from language import LANG, current_lang, COLOR
 
 lan = LANG[current_lang]
 
