@@ -8,10 +8,11 @@ lan = LANG[current_lang]
 
 couleur = COLOR
 
-# __________________________________________________________________#
-# 						affichage du fond							#
-# 	base de l'app plus 
-# 
+# ._________________________________________________________________.#
+# |						affichage du fond							|#
+# |_________________________________________________________________|#
+# 	base de l'app (fond d'ecran, chargement des images)
+# 	mise en place des Etats
 # 
 # 
 
@@ -22,10 +23,6 @@ app.config(bg=couleur["roseF"])
 app.geometry("400x600")
 icon = tk.PhotoImage(file="assets/logo.png")
 app.iconphoto(True, icon)
-
-#navbar
-topFrame = tk.Frame(app, bg=couleur["bleuC"])
-topFrame.pack(side="top", fill=tk.X)
 
 # para fonction
 btnEtat = False
@@ -246,6 +243,10 @@ infoSettings = tk.Label(app,
 		# 						bg=couleur["blan"]).place(x=10, y=125)
 		# btnEtat = False
 		# compteEtat = True
+
+#navbar
+topFrame = tk.Frame(app, bg=couleur["bleuC"])
+topFrame.pack(side="top", fill=tk.X)
 
 # navbar icone
 navbarBtn = tk.Button(topFrame,
