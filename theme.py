@@ -127,6 +127,18 @@ def Chat():
 	# if Etat is False:
 	# 	ChatFrame.config(bg = couleur["bleuF"])
 
+def Amies():
+	global btnEtat
+	global amisEtat
+	if btnEtat is True:
+		btnEtat=False
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+	amisEtat=True
+	for x in range(-400, 1):
+		AmiesFrame.place(x=-x, y=48)
+		topFrame.update()
 
 
 # permet d'affiche le compte
@@ -139,8 +151,8 @@ def Compte():
 			navLateral.place(x=-x, y=0)
 			topFrame.update()
 	compteEtat=True
-	for y in range(-600, -48):
-		CompteFrame.place(x=-1, y=-y)
+	for x in range(-400, 1):
+		CompteFrame.place(x=-x, y=48)
 		topFrame.update()
 	# Compte2(False)
 
@@ -196,7 +208,31 @@ text_list.place(x=10, y=5)
 # |_________________________________________________________________| #
 
 AmiesFrame = tk.Frame(app, bg=couleur["bleuF"], width=400, height=600)
+AmiesFrame.place(x=-400, y=0)
 
+listeFriend = ["Kaito", "Helga", "Yuri", "Max", "Rachel", "Nana", "Heka", "Krys", "Kai"]
+y = 10
+if len(listeFriend) > 0:
+	for i in range(len(listeFriend)):
+		tk.Frame(AmiesFrame, bg=couleur["violet"], width=50, height=50).place(x=10, y=y)
+		# FriendBar = tk.Frame(AmiesFrame, bg=couleur["violet"], width=380, height=50).place(x=10, y=y)
+		Name = tk.Button(AmiesFrame, text=listeFriend[i],
+							 font="comicsansms 14",
+							 bg=couleur["bleuF"],
+							 fg=couleur["blan"],
+							 width=3,
+							 height=2,
+							 activebackground=couleur["bleuF"],
+							 command=None).place(x=60, y=y-2)
+		tk.Frame(AmiesFrame, bg=couleur["violet"], width=280, height=50).place(x=112, y=y)
+		ChatMsg = tk.Button(AmiesFrame, text=lan["chat"],
+										bg=couleur["bleuF"],
+										fg=couleur["blan"],
+										width=7,
+										height=1,
+										activebackground=couleur["bleuF"],
+										command=None).place(x=280, y=y + 10)
+		y+=60
 
 # ._________________________________________________________________. #
 # |						  Affichage du compte  						| #
@@ -316,7 +352,7 @@ y = 80
 
 # option lateral
 option = [lan["home"], lan["account"], lan["friends"], lan["chat"], lan["help"], lan["exit"]]
-com = [Accueil, Compte, None, Chat, None, Quitte]
+com = [Accueil, Compte, Amies, Chat, None, Quitte]
 #com = [switch, Compte, Amies, Chat, Aide, Quitte]
 
 # position option
