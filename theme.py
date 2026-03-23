@@ -57,112 +57,85 @@ can.pack()
 # |	-le menu, le compte, l'accueil, le chat, l'exit, 				| #
 # |_________________________________________________________________| #
 
-# definir switch
+def front(page):
+	global compteEtat
+	global amisEtat
+	global chatEtat
+	global helpEtat
+
+	if compteEtat is True and page != "compte":
+		for x in range(400):
+			CompteFrame.place(x=-x, y=48)
+			topFrame.update()
+		compteEtat=False
+	elif amisEtat is True and page != "amis":
+		for x in range(400):
+			AmiesFrame.place(x=-x, y=48)
+			topFrame.update()
+		amisEtat=False
+	elif chatEtat is True and page != "chat":
+		for x in range(400):
+			ChatFrame.place(x=-x, y=48)
+			topFrame.update()
+		chatEtat=False
+	# else if helpEtat is True and page != aide:
+	# 	for x in range(400):
+	# 		helpFrame.place(x=-x, y=48)
+	# 		topFrame.update()
+	# 	helpEtat=False
+
+# definir switch de la navbar lateral
 def switch():
 	global btnEtat
-	global compteEtat
 	if btnEtat is True:
 		for x in range(300):
 			navLateral.place(x=-x, y=0)
 			topFrame.update()
-		if compteEtat is True:
-			bannerTexte.config(fg=couleur["roseC"], bg=couleur["roseC"])
-			accueilText.config(bg=couleur["bleuC"])
-			topFrame.config(bg=couleur["bleuC"])
-			app.config(bg=couleur["roseF"])
-			profil(False)
-		else:
-			# profil(app, True)
-			bannerTexte.config(fg=couleur["violet"], bg=couleur["roseF"])
-			accueilText.config(bg=couleur["bleuC"])
-			topFrame.config(bg=couleur["bleuC"])
-			app.config(bg=couleur["roseC"])
 		btnEtat = False
 	else :
 		for x in range(-300, 0):
 			navLateral.place(x=x, y=0)
 			topFrame.update()
-		if compteEtat is True:
-			profil(True)
 		btnEtat=True
 
+# faire apparaitre l'acueil
 def Accueil():
-	global btnEtat
-	global compteEtat
-	if btnEtat is True:
-		for x in range(300):
-			navLateral.place(x=-x, y=0)
-			topFrame.update()
-		bannerTexte.config(fg=couleur["violet"], bg=couleur["blan"])
-		accueilText.config(bg=couleur["bleuC"])
-		topFrame.config(bg=couleur["bleuC"])
-		app.config(bg=couleur["roseC"])
-		btnEtat = False
-	if compteEtat is True:
-		profil(True)
-		compteEtat = False
-	# else :
-	# 	for x in range(-300, 0):
-	# 		navLateral.place(x=x, y=0)
-	# 		topFrame.update()
-	# 	btnEtat=True
+	switch()
+	front("accueil")
 
 # permet d'afficher le chat
 def Chat():
-	global btnEtat
 	global chatEtat
-	if btnEtat is True:
-		btnEtat=False
-		for x in range(300):
-			navLateral.place(x=-x, y=0)
+	switch()
+	if chatEtat is False:
+		for x in range(-400, 1):
+			ChatFrame.place(x=-x, y=48)
 			topFrame.update()
+		front("chat")
 	chatEtat=True
-	for x in range(-400, 1):
-		ChatFrame.place(x=-x, y=48)
-		topFrame.update()
-	# chat2(False)
-
-# affichage fluide du chat
-# def chat2(Etat):
-	# if Etat is False:
-	# 	ChatFrame.config(bg = couleur["bleuF"])
 
 def Amies():
-	global btnEtat
 	global amisEtat
-	if btnEtat is True:
-		btnEtat=False
-		for x in range(300):
-			navLateral.place(x=-x, y=0)
+	switch()
+	if amisEtat is False:
+		for x in range(-400, 1):
+			AmiesFrame.place(x=-x, y=48)
 			topFrame.update()
+		front("amis")
 	amisEtat=True
-	for x in range(-400, 1):
-		AmiesFrame.place(x=-x, y=48)
-		topFrame.update()
-
 
 # permet d'affiche le compte
 def Compte():
-	global btnEtat
 	global compteEtat
-	if btnEtat is True:
-		btnEtat=False
-		for x in range(300):
-			navLateral.place(x=-x, y=0)
+	switch()
+	if compteEtat is False:
+		for x in range(-400, 1):
+			CompteFrame.place(x=-x, y=48)
 			topFrame.update()
+		front("compte")
 	compteEtat=True
-	for x in range(-400, 1):
-		CompteFrame.place(x=-x, y=48)
-		topFrame.update()
-	# Compte2(False)
-
-# def Compte2(Etat):
-	# if Etat is False:
-	# 	CompteFrame.config(bg = couleur["bleuF"])
 
 def Quitte():
-	global btnEtat
-	btnEtat=False
 	exit()
 
 # ._________________________________________________________________. #
@@ -362,6 +335,8 @@ for i in range(6):
 						  font="comicsansms 16",
 						  bg=couleur["roseC"],
 						  fg=couleur["blan"],
+						  width=8,
+						  height=1,
 						  activebackground=couleur["roseF"],
 						  command=com[i]
 			 ).place(x=25, y=y)
