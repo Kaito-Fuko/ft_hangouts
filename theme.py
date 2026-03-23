@@ -106,7 +106,12 @@ def Accueil():
 # permet d'afficher le chat
 def Chat():
 	global chatEtat
-	switch()
+	global btnEtat
+	if btnEtat is True:
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+		btnEtat = False
 	if chatEtat is False:
 		for x in range(-400, 1):
 			ChatFrame.place(x=-x, y=48)
@@ -116,7 +121,12 @@ def Chat():
 
 def Amies():
 	global amisEtat
-	switch()
+	global btnEtat
+	if btnEtat is True:
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+		btnEtat = False
 	if amisEtat is False:
 		for x in range(-400, 1):
 			AmiesFrame.place(x=-x, y=48)
@@ -127,7 +137,12 @@ def Amies():
 # permet d'affiche le compte
 def Compte():
 	global compteEtat
-	switch()
+	global btnEtat
+	if btnEtat is True:
+		for x in range(300):
+			navLateral.place(x=-x, y=0)
+			topFrame.update()
+		btnEtat = False
 	if compteEtat is False:
 		for x in range(-400, 1):
 			CompteFrame.place(x=-x, y=48)
@@ -196,7 +211,7 @@ if len(listeFriend) > 0:
 							 width=3,
 							 height=2,
 							 activebackground=couleur["bleuF"],
-							 command=None).place(x=60, y=y-2)
+							 command=Compte).place(x=60, y=y-2)
 		tk.Frame(AmiesFrame, bg=couleur["violet"], width=280, height=50).place(x=112, y=y)
 		ChatMsg = tk.Button(AmiesFrame, text=lan["chat"],
 										bg=couleur["bleuF"],
@@ -204,7 +219,7 @@ if len(listeFriend) > 0:
 										width=7,
 										height=1,
 										activebackground=couleur["bleuF"],
-										command=None).place(x=280, y=y + 10)
+										command=Chat).place(x=280, y=y + 10)
 		y+=60
 
 # ._________________________________________________________________. #
@@ -220,8 +235,8 @@ CompteFrame.place(x=1, y=-600)
 # affichage compte
 profil = tk.Label(CompteFrame,
 				  bg=couleur["violet"],
-				  height=2,
-				  width=5)
+				  height=3,
+				  width=7)
 profil.place(x=10, y=20)
 
 infoUsername = tk.Label(CompteFrame,
@@ -229,17 +244,20 @@ infoUsername = tk.Label(CompteFrame,
 						font="comicsansms 12",
 						fg=couleur["violet"],
 						bg=couleur["bleuF"])
-infoUsername.place(x=60,y=20)
-infoAmies = tk.Label(CompteFrame,
+infoUsername.place(x=90,y=25)
+infoAmies = tk.Button(CompteFrame,
 					 text=lan["friends"],
 					 font="comicsansms 12",
 					 fg=couleur["violet"],
-					 bg=couleur["bleuF"]).place(x=60, y=40)
-infoSettings = tk.Label(CompteFrame,
+					 activebackground=couleur["bleuC"],
+					 bg=couleur["bleuF"],
+					 command=Amies).place(x=90, y=45)
+infoSettings = tk.Button(CompteFrame,
 						text=lan["settings"],
 						font="comicsansms 12",
 						fg=couleur["violet"],
-						bg=couleur["bleuF"]).place(x=10, y=65)
+						activebackground=couleur["bleuC"],
+						bg=couleur["bleuF"]).place(x=10, y=95)
 
 # def profil(Etat):
 	# global btnEtat
@@ -297,8 +315,8 @@ accueilText.pack(side="right")
 # navbar icone
 navbarBtn = tk.Button(topFrame,
 					  image=navIcon,
-					  bg=couleur["bleuC"],
 					  padx=20,
+					  bg=couleur["bleuC"],
 					  activebackground=couleur["bleuF"],
 					  command=switch)
 navbarBtn.place(x=5, y=5)
